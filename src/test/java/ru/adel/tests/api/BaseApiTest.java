@@ -18,9 +18,4 @@ public class BaseApiTest extends BaseTest {
                 .setParam("http.connection.timeout", timeout)
                 .setParam("http.socket.timeout", timeout));
     }
-
-    @BeforeEach
-    void setUp() {
-        apiClient = new UserApiClient(url, endpoint);
-    }
 }

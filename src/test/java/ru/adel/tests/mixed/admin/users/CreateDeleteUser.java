@@ -3,7 +3,7 @@ package ru.adel.tests.mixed.admin.users;
 import io.restassured.response.Response;
 
 import org.apache.http.HttpStatus;
-import ru.adel.mocks.mixed.FastApiUiMock;
+import ru.adel.mocks.mixed.ApiUiMock;
 import ru.adel.tests.api.accounts.UserApiClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,21 +14,22 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CreateDeleteUser extends BaseApiUiTest {
     private String userName;
     private String userId;
-    private FastApiUiMock apiUiMock;
+    private ApiUiMock apiUiMock;
+    protected String endpoint = "/api/v1/users";
+    protected String url = "http://localhost:8080";
 
     @BeforeEach
     void setupTest() {
         UUID guid = UUID.randomUUID();
-        userId = "123";
+        userId = guid.toString();
         userName = "user-name-" + guid;
         apiClient = new UserApiClient(url, endpoint);
-        apiUiMock = new FastApiUiMock();
+        apiUiMock = new ApiUiMock(endpoint);
     }
 
     //с моком

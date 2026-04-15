@@ -10,7 +10,6 @@ public class UsersPage {
     }
 
     public boolean isUserPresent(String userName) {
-        System.out.println("Adel Test getPageSource:" + driver.getPageSource());
         return driver.getPageSource().contains(userName);
     }
 }
