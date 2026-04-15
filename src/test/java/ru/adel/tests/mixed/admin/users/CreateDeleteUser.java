@@ -3,6 +3,7 @@ package ru.adel.tests.mixed.admin.users;
 import io.restassured.response.Response;
 
 import org.apache.http.HttpStatus;
+import org.junit.jupiter.params.ParameterizedTest;
 import ru.adel.mocks.mixed.ApiUiMock;
 import ru.adel.tests.api.accounts.UserApiClient;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CreateDeleteUser extends BaseApiUiTest {
     private String userName;
     private String userId;
-    private ApiUiMock apiUiMock;
+    protected ApiUiMock apiUiMock;
     protected String endpoint = "/api/v1/users";
     protected String url = "http://localhost:8080";
 
@@ -38,7 +39,7 @@ public class CreateDeleteUser extends BaseApiUiTest {
         //Мокаем api
         apiUiMock.mockApiUsers(userName, userId);
         //Отправка пользователя по api
-        Response createResponse = createUser();
+        Response createResponse = createUser(userName);
 
         //Проверка статус кода
         checkStatusCode(createResponse);
@@ -69,7 +70,7 @@ public class CreateDeleteUser extends BaseApiUiTest {
     @Test
     void createUser_checkOnUi_andCheckDeleted() {
         //Отправка пользователя по api
-        Response createResponse = createUser();
+        Response createResponse = createUser(userName);
 
         //Проверка статус кода
         checkStatusCode(createResponse);
@@ -109,7 +110,7 @@ public class CreateDeleteUser extends BaseApiUiTest {
         return new UsersPage(driver);
     }
 
-    private Response createUser() {
+    private Response createUser(String userName) {
         Map<String, Object> user = new HashMap<>();
         user.put("name", userName);
         return apiClient.createUser(user);

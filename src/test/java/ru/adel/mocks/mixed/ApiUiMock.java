@@ -23,6 +23,20 @@ public class ApiUiMock {
                 ));
     }
 
+    public void mockApiUsersWithEmail(String userName, String email) {
+        stubFor(post(endpoint)
+                .willReturn(aResponse()
+                        .withStatus(200)
+                        .withHeader("Content-Type", "application/json")
+                        .withBody("""
+            {
+              "email": "%s",
+              "name": "%s"
+            }
+        """.formatted(email, userName))
+                ));
+    }
+
     public void mockUiData(String userName, String id) {
         stubFor(get(endpoint + "/" + id)
                 .willReturn(aResponse()
@@ -41,5 +55,11 @@ public class ApiUiMock {
         stubFor(get(endpoint + "/" + id)
                 .willReturn(aResponse()
                         .withStatus(404)));
+    }
+
+    public void mockTriggered(String trigger) {
+        stubFor(post(endpoint)
+                .withRequestBody(containing(trigger))
+                .willReturn(aResponse().withStatus(400)));
     }
 }
